@@ -7,7 +7,11 @@ class Posts extends Component {
     };
 
     componentDidMount(){
-        axios.get("http://127.0.0.1:8000/api/posts").then(res =>{
+        axios.get("http://127.0.0.1:8000/api/posts/",{
+            headers: {
+                Authorization: `Token 311067c9572651952f190bd870aa2bc2cd55864c`,
+            },
+        }).then(res =>{
            console.log(res.data);
            this.setState({posts: res.data}); 
         }); 
