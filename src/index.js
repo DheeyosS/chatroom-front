@@ -3,4 +3,13 @@ import ReactDOM from "react-dom";
 import App from "./App";
 import "./style/index.scss";
 
-ReactDOM.render(<App />, document.getElementById("root"));
+import { AuthProvider } from "./services/store/authStore";
+
+ReactDOM.render(
+  <React.StrictMode>
+    <AuthProvider>
+      <App />
+    </AuthProvider>
+  </React.StrictMode>,
+  document.getElementById("root")
+);

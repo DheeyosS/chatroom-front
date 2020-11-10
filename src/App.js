@@ -1,15 +1,49 @@
-import React, { Component } from 'react'
-import './App.css'
-import Posts from './Posts'
+import React, { useEffect, useContext } from "react";
+import "./App.css";
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 
-class App extends Component {
-  render() {
-    return (
-      <div className="App">
-        <Posts />
-      </div>
-    )
-  }
+import { AuthContext } from "./services/store/authStore";
+import Navbar from "./components/navbar";
+import { cookieAutoLoginAPI } from "./services/api";
+
+import Login from "./scenes/sign/scenes/login";
+import Register from "./scenes/sign/scenes/register";
+import Posts from "./Posts";
+
+function App() {
+  const { isAuth, logIn } = useContext(AuthContext);
+
+  useEffect(() => {
+    (async () => {
+      if (!isAuth) {
+        const response = await cookieAutoLoginAPI();
+        if (!response.error) {
+          logIn({ username: response.username });
+        }
+      }
+    })();
+  }, [isAuth, logIn]);
+  return (
+    <div className="App">
+      <Router>
+        <Navbar />
+        <Switch>
+          {/* <Route path="/login/:username">
+            <Login />
+          </Route> */}
+          <Route exact path="/">
+            <Login />
+          </Route>
+          <Route exact path="/register">
+            <Register />
+          </Route>
+          <Route path="/posts">
+            <Posts />
+          </Route>
+        </Switch>
+      </Router>
+    </div>
+  );
 }
 
-export default App
+export default App;
