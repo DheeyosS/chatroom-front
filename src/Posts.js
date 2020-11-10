@@ -2,7 +2,9 @@ import React, { useEffect, useState } from "react";
 import { DOMAIN } from "./config/index";
 import axios from "axios";
 import { getCookie } from "./services/utils/get-cookie";
+
 import PostsInput from "./PostsInput";
+import CommentsInput from "./CommentsInput";
 
 function Posts() {
   const [posts, setPosts] = useState([]);
@@ -20,9 +22,21 @@ function Posts() {
         setPosts(data);
       });
   }, []);
+
+  // const deletePost = async (id) => {
+  //   axios.delete(`${DOMAIN}/api/posts/${id}`);
+  // };
+
+  // const deleteComment = async (id) => {
+  //   axios.delete(`${DOMAIN}/api/comments/${id}`);
+  // };
+
+  // const editPost = async (id) => {
+  //   axios.post(`${DOMAIN}/api/comments/${id}/edit/`);
+  // };
+
   return (
     <div>
-      {/* <h1>All Posts</h1> */}
       <center>
         <h1>All Posts</h1>
       </center>
@@ -40,6 +54,7 @@ function Posts() {
         {posts.map((post, i) => (
           <li className="border border-primary text-left" key={post.id}>
             <label className="font-weight-bold">{`${post.username}:`}</label>
+            {/* <button onClick={() => editPost(post.id)}>edit</button> */}
             <br />
             {post.text}
             <br />
@@ -51,8 +66,13 @@ function Posts() {
                 >
                   {" "}
                   <label className="font-weight-bold">{`${comment.username}:`}</label>
+                  {/* <button onClick={() => deleteComment(comment.id)}>X</button> */}
                   <br />
                   {comment.text}{" "}
+                  <div>
+                    id = post.id;
+                    <CommentsInput />
+                  </div>
                 </li>
               ))}
             </ul>
