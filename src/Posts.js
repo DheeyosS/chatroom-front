@@ -21,11 +21,37 @@ class Posts extends Component {
   render() {
     return (
       <div>
-        <h1>All Posts</h1>
-        <ul className="postlist">
+        <center><h1>All Posts</h1></center>
+        <div 
+          style={{
+            display: "flex",
+            flexDirection: "column",
+            height: "80vh"
+          }}
+        >
+        <div>
+        <center><h1>Create Post</h1></center>
+        <form onSubmit={this.savePost}>
+          <center><div className="textarea">
+            <label>Text</label>
+            <textarea
+              onChange={this.handleDescriptionChange}
+              type="text"
+              className="textarea"
+              id="textarea"
+              row="10"
+              col="50"
+            />
+          </div></center>
+          <center><button type="submit" className="btn btn-primary">
+            Post
+          </button></center>
+        </form>
+        </div>
+        <div><div><ul className="postlist">
           {this.state.posts.map((post, i) => (
-            <li key={post.id}>
-              {post.username}
+            <li className="border border-primary text-left" key={post.id}>
+              <label className="font-weight-bold">{`${post.username}:`}</label>
               <br />
               {post.text}
               <br />
@@ -41,7 +67,8 @@ class Posts extends Component {
               </ul>
             </li>
           ))}
-        </ul>
+        </ul></div></div>
+        </div>
       </div>
     );
   }
