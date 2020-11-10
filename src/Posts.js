@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { DOMAIN } from "./config/index";
 import axios from "axios";
+import { getCookie } from "./services/utils/get-cookie";
+import PostsInput from "./PostsInput";
 
 function Posts() {
   const [posts, setPosts] = useState([]);
@@ -9,7 +11,7 @@ function Posts() {
     axios
       .get(`${DOMAIN}/api/posts/`, {
         headers: {
-          Authorization: `Token 311067c9572651952f190bd870aa2bc2cd55864c`,
+          Authorization: `Token ${getCookie("token")}`,
         },
       })
       .then((res) => {
@@ -20,19 +22,35 @@ function Posts() {
   }, []);
   return (
     <div>
-      <h1>All Posts</h1>
+      {/* <h1>All Posts</h1> */}
+      <center>
+        <h1>All Posts</h1>
+      </center>
+      <div
+        style={{
+          display: "flex",
+          flexDirection: "column",
+          height: "80h",
+        }}
+      ></div>
+      <div>
+        <PostsInput />
+      </div>
       <ul className="postlist">
         {posts.map((post, i) => (
-          <li key={post.id}>
-            {post.username}
+          <li className="border border-primary text-left" key={post.id}>
+            <label className="font-weight-bold">{`${post.username}:`}</label>
             <br />
             {post.text}
             <br />
             <ul className="commentlist">
               {post.comments.map((comment, j) => (
-                <li key={comment.id}>
+                <li
+                  className="border border-primary text-left"
+                  key={comment.id}
+                >
                   {" "}
-                  {comment.username}
+                  <label className="font-weight-bold">{`${comment.username}:`}</label>
                   <br />
                   {comment.text}{" "}
                 </li>

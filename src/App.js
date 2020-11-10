@@ -7,7 +7,7 @@ import Navbar from "./components/navbar";
 import { cookieAutoLoginAPI } from "./services/api";
 
 import Login from "./scenes/sign/scenes/login";
-import Register from "./scenes/sign/scenes/register";
+// import Register from "./scenes/sign/scenes/register";
 import Posts from "./Posts";
 
 function App() {
@@ -34,9 +34,9 @@ function App() {
           <Route exact path="/">
             <Login />
           </Route>
-          <Route exact path="/register">
+          {/* <Route exact path="/register">
             <Register />
-          </Route>
+          </Route> */}
           <Route path="/posts">
             <Posts />
           </Route>

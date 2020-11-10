@@ -22,11 +22,11 @@ export default function Navbar() {
           <Link to="/">log in</Link>
         </Menu.Item>
       )}
-      {!isAuth && (
+      {/* {!isAuth && (
         <Menu.Item key="register">
           <Link to="/register">register</Link>
         </Menu.Item>
-      )}
+      )} */}
       {isAuth && (
         <Menu.Item key="posts">
           <Link to="/posts">posts</Link>
