@@ -1,15 +1,31 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useCallback } from "react";
 import { DOMAIN } from "./config/index";
 import axios from "axios";
 import { getCookie } from "./services/utils/get-cookie";
 
 import PostsInput from "./PostsInput";
 import CommentsInput from "./CommentsInput";
+import EditPostInput from "./EditPostInput";
+import EditCommentInput from "./EditCommentInput";
 
 function Posts() {
   const [posts, setPosts] = useState([]);
 
   useEffect(() => {
+    axios
+      .get(`${DOMAIN}/api/posts/`, {
+        headers: {
+          Authorization: `Token ${getCookie("token")}`,
+        },
+      })
+      .then((res) => {
+        const { data } = res;
+        console.log(data);
+        setPosts(data);
+      });
+  }, []);
+
+  const refreshPost = useCallback(() => {
     axios
       .get(`${DOMAIN}/api/posts/`, {
         headers: {
@@ -48,7 +64,7 @@ function Posts() {
         }}
       ></div>
       <div>
-        <PostsInput />
+        <PostsInput callback={refreshPost} />
       </div>
       <ul className="postlist">
         {posts.map((post, i) => (
@@ -69,13 +85,17 @@ function Posts() {
                   {/* <button onClick={() => deleteComment(comment.id)}>X</button> */}
                   <br />
                   {comment.text}{" "}
-                  <div>
-                    id = post.id;
-                    <CommentsInput />
-                  </div>
+                  <EditCommentInput
+                    commentId={comment.id}
+                    callback={refreshPost}
+                  />
                 </li>
               ))}
             </ul>
+            <div>
+              <EditPostInput postId={post.id} callback={refreshPost} />
+              <CommentsInput postId={post.id} callback={refreshPost} />
+            </div>
           </li>
         ))}
       </ul>

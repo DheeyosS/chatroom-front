@@ -3,7 +3,7 @@ import { DOMAIN } from "./config/index";
 import axios from "axios";
 import { getCookie } from "./services/utils/get-cookie";
 
-export default class CommentsInput extends React.Component {
+export default class EditCommentInput extends React.Component {
   state = {
     body: "",
   };
@@ -15,11 +15,11 @@ export default class CommentsInput extends React.Component {
   handleSubmit = (event) => {
     event.preventDefault();
 
-    const { postId, callback } = this.props;
+    const { commentId, callback } = this.props;
     const { body } = this.state;
     axios
       .post(
-        `${DOMAIN}/api/posts/${postId}/comment/`,
+        `${DOMAIN}/api/comments/${commentId}/edit/`,
         { text: body },
         {
           headers: {
@@ -41,7 +41,7 @@ export default class CommentsInput extends React.Component {
         <form onSubmit={this.handleSubmit}>
           <center>
             <div className="textarea">
-              <label>Comment</label>
+              <label>Edit Comment</label>
               <textarea
                 onChange={this.handleChange}
                 body="text"
@@ -55,7 +55,7 @@ export default class CommentsInput extends React.Component {
           </center>
           <center>
             <button type="submit" className="btn btn-primary">
-              Post Comment
+              Edit Comment
             </button>
           </center>
         </form>

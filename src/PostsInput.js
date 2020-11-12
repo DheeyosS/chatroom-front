@@ -15,14 +15,13 @@ export default class PostsInput extends React.Component {
   handleSubmit = (event) => {
     event.preventDefault();
 
-    const post = {
-      body: this.state.body,
-    };
+    const { body } = this.state;
+    const { callback } = this.props;
 
     axios
       .post(
         `${DOMAIN}/api/posts/`,
-        { post },
+        { text: body },
         {
           headers: {
             Authorization: `Token ${getCookie("token")}`,
@@ -30,9 +29,11 @@ export default class PostsInput extends React.Component {
         }
       )
       .then((res) => {
+        callback();
         console.log(res);
         console.log(res.data);
       });
+    this.setState({ body: "" });
   };
 
   render() {
@@ -44,7 +45,6 @@ export default class PostsInput extends React.Component {
         <form onSubmit={this.handleSubmit}>
           <center>
             <div className="textarea">
-              <label>Text</label>
               <textarea
                 onChange={this.handleChange}
                 body="text"
@@ -52,6 +52,7 @@ export default class PostsInput extends React.Component {
                 id="textarea"
                 row="10"
                 col="50"
+                value={this.state.body}
               />
             </div>
           </center>

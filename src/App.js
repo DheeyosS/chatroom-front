@@ -28,17 +28,11 @@ function App() {
       <Router>
         <Navbar />
         <Switch>
-          {/* <Route path="/login/:username">
-            <Login />
-          </Route> */}
-          <Route exact path="/">
-            <Login />
-          </Route>
-          {/* <Route exact path="/register">
-            <Register />
-          </Route> */}
           <Route path="/posts">
             <Posts />
+          </Route>
+          <Route exact path="/">
+            <Login />
           </Route>
         </Switch>
       </Router>
