@@ -7,7 +7,7 @@ import { eraseCookie } from "../../services/utils/erase-cookie";
 
 export default function Navbar() {
   const router = useHistory();
-  const { isAuth, username, logOut } = useContext(AuthContext);
+  const { isAuth /*, username*/, logOut } = useContext(AuthContext);
 
   const handleLogout = () => {
     logOut();
@@ -32,8 +32,8 @@ export default function Navbar() {
           <Link to="/posts">posts</Link>
         </Menu.Item>
       )}
-      {isAuth && <Button onClick={handleLogout}>log out</Button>}
-      {isAuth && <span style={{ marginLeft: "1rem" }}>user:{username}</span>}
+      {<Button onClick={handleLogout}>log out</Button>}
+      {/* {isAuth && <span style={{ marginLeft: "1rem" }}>user:{username}</span>} */}
     </Menu>
   );
 }
